@@ -1,0 +1,6 @@
+streamlit
+plotly
+pandas
+openai
+fpdf2
+python-dotenv
