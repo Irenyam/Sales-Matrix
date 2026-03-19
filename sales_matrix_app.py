@@ -356,7 +356,7 @@ def generate_pdf_report(quadrant: str, scores: NormalizedScores, strategy: dict,
     pdf.set_font("Arial", "", 12)
 # strategy keys like core_focus and general_actions are used if present
 core = strategy.get("core_focus", "")
-    pdf.multi_cell(0, 7, f"Core focus: {core}")
+pdf.multi_cell(0, 7, f"Core focus: {core}")
 if "general_actions" in strategy:
     pdf.cell(0, 7, "General actions:", ln=True)
     for action in strategy.get("general_actions", []):
