@@ -33,7 +33,6 @@ self.emotional_connection = round(emotional_connection, 2) # 0-100 scale
 self.perceived_value = round(perceived_value, 2) # 0-100 scale
 self.trust = round(trust, 2) # 0-100 scale
 self.scarcity_exclusivity = round(scarcity_exclusivity, 2) # 0-100 scale
-Official Priority-Based Quadrant Classification
 def classify_quadrant(scores: NormalizedScores, custom_thresholds: dict = None) -> tuple[str, dict]:
 DEFAULT_THRESHOLDS = {
 "high_pv": 70, "low_pv": 30,
@@ -43,7 +42,6 @@ DEFAULT_THRESHOLDS = {
 }
 thresholds = custom_thresholds or DEFAULT_THRESHOLDS
 ec, pv, t, s = scores.emotional_connection, scores.perceived_value, scores.trust, scores.scarcity_exclusivity
-# Official priority order from your source document
 q1 = ec <= thresholds["low_ec"] and pv >= thresholds["high_pv"]
 q2 = ec >= thresholds["high_ec"] and t >= thresholds["high_trust"]
 q3 = ec <= thresholds["low_ec"] and pv <= thresholds["low_pv"]
@@ -74,17 +72,13 @@ else:
     quadrant_name = "Unclassified Quadrant"
 
 return quadrant_name, thresholds
-Industry-Specific KPI Normalizer
 def normalize_scores(industry: str, kpis: dict, is_prelaunch: bool = False) -> NormalizedScores:
-"""Convert industry-specific KPIs to universal 0-100 scoring scale"""
 if is_prelaunch:
-# Use planned metrics for pre-launch forecasting
 pv = kpis.get("planned_pv_score", 50)
 ec = kpis.get("planned_ec_score", 20)
 trust = kpis.get("planned_trust_score", 20)
 scarcity = kpis.get("planned_scarcity_score", 20)
 else:
-# Use live performance metrics
 if industry == "General Retail":
 pv = (kpis.get("avg_review_rating", 2.5) / 5) * 100
 ec = (kpis.get("loyalty_participation_pct", 0.01) * 100)
@@ -120,7 +114,6 @@ return NormalizedScores(ec, pv, trust, scarcity)
 AI-Powered Strategy Generator
 ------------------------------
 def generate_optimization_strategy(quadrant: str, industry: str, persona: str, openai_api_key: str = None) -> dict:
-"""Generate tailored, actionable strategies with optional AI enhancements"""
 base_strategies = {
 "Quadrant 1: Value Proposition Zone": {
 "core_focus": "Strengthen emotional connection while preserving high perceived value",
@@ -228,7 +221,6 @@ base_strategies = {
 }
 }
 }
-# Add AI-generated hyper-specific tactics if API key is provided
 if openai_api_key:
     try:
         openai.api_key = openai_api_key
@@ -255,7 +247,6 @@ return base_strategies[quadrant]
 Quadrant Visualization
 ------------------------------
 def render_performance_chart(scores: NormalizedScores):
-"""Render interactive bar chart of core perception metrics"""
 metric_data = pd.DataFrame({
 "Core Matrix Dimension": [
 "Emotional Connection",
@@ -299,7 +290,6 @@ if st.button("Add Task") and new_task:
     })
     st.success(f"Added task: {new_task}")
 
-# Display and manage tasks
 if st.session_state.tasks:
     for idx, task in enumerate(st.session_state.tasks):
         col1, col2, col3 = st.columns([0.7, 0.2, 0.1])
@@ -340,7 +330,6 @@ pdf.ln(5)
 pdf.set_font("Arial", "B", 12)
 pdf.cell(0, 8, "Recommended Strategy:", ln=True)
 pdf.set_font("Arial", "", 12)
-# strategy keys like core_focus and general_actions are used if present
 core = strategy.get("core_focus", "")
 pdf.multi_cell(0, 7, f"Core focus: {core}")
 if "general_actions" in strategy:
@@ -377,7 +366,6 @@ Minimal UI so page shows (you can expand this)
 def main():
 st.title("8-Quadrant Sales Matrix Tool")
 st.write("App loaded — Quadrant tool ready")
-# Example usage so UI shows something
 demo_scores = NormalizedScores(25, 80, 60, 10)
 quadrant, thresholds = classify_quadrant(demo_scores)
 st.write(f"Demo quadrant: {quadrant}")
@@ -386,7 +374,6 @@ render_performance_chart(demo_scores)
 st.markdown("---")
 render_task_tracker()
 
-# Download demo PDF
 strategy = generate_optimization_strategy(quadrant, "General Retail", "SMB Owner")
 pdf_buf = generate_pdf_report(quadrant, demo_scores, strategy, st.session_state.tasks)
 st.download_button("Download Demo Report (PDF)", data=pdf_buf, file_name="sales_matrix_report.pdf", mime="application/pdf")
