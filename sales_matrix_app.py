@@ -339,4 +339,4 @@ def generate_pdf_report(quadrant: str, scores: NormalizedScores, strategy: dict,
     pdf.set_font("Arial", "B", 12)
     pdf.cell(0, 10, txt="Product Quadrant Classification", ln=True)
     pdf.set_font("Arial", "", 12)
-    pdf.cell(0, 10, txt=f"Current Quadrant: {quadrant}", ln=True
+    pdf.cell(0, 10, txt=f"Current Quadrant: {quadrant}", ln=True)
