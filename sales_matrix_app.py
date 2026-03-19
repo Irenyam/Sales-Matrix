@@ -335,28 +335,28 @@ def generate_pdf_report(quadrant: str, scores: NormalizedScores, strategy: dict,
     pdf.cell(0, 10, txt="8-Quadrant Sales Matrix Report", ln=True, align="C")
     pdf.ln(10)
 
-    # Product Classification Details
-pdf.set_font("Arial", "B", 12)
-pdf.cell(0, 10, txt="Product Quadrant Classification", ln=True)
-pdf.set_font("Arial", "", 12)
-pdf.cell(0, 10, txt=f"Current Quadrant: {quadrant}", ln=True)
+# Product Classification Details
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 10, txt="Product Quadrant Classification", ln=True)
+    pdf.set_font("Arial", "", 12)
+    pdf.cell(0, 10, txt=f"Current Quadrant: {quadrant}", ln=True)
 
-pdf.ln(5)
-pdf.set_font("Arial", "B", 12)
-pdf.cell(0, 8, "Normalized Scores (0-100):", ln=True)
-pdf.set_font("Arial", "", 12)
-pdf.cell(0, 7, f"Emotional Connection: {scores.emotional_connection}", ln=True)
-pdf.cell(0, 7, f"Perceived Value: {scores.perceived_value}", ln=True)
-pdf.cell(0, 7, f"Trust: {scores.trust}", ln=True)
-pdf.cell(0, 7, f"Scarcity/Exclusivity: {scores.scarcity_exclusivity}", ln=True)
+    pdf.ln(5)
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 8, "Normalized Scores (0-100):", ln=True)
+    pdf.set_font("Arial", "", 12)
+    pdf.cell(0, 7, f"Emotional Connection: {scores.emotional_connection}", ln=True)
+    pdf.cell(0, 7, f"Perceived Value: {scores.perceived_value}", ln=True)
+    pdf.cell(0, 7, f"Trust: {scores.trust}", ln=True)
+    pdf.cell(0, 7, f"Scarcity/Exclusivity: {scores.scarcity_exclusivity}", ln=True)
 
-pdf.ln(5)
-pdf.set_font("Arial", "B", 12)
-pdf.cell(0, 8, "Recommended Strategy:", ln=True)
-pdf.set_font("Arial", "", 12)
+    pdf.ln(5)
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 8, "Recommended Strategy:", ln=True)
+    pdf.set_font("Arial", "", 12)
 # strategy keys like core_focus and general_actions are used if present
 core = strategy.get("core_focus", "")
-pdf.multi_cell(0, 7, f"Core focus: {core}")
+    pdf.multi_cell(0, 7, f"Core focus: {core}")
 if "general_actions" in strategy:
     pdf.cell(0, 7, "General actions:", ln=True)
     for action in strategy.get("general_actions", []):
@@ -369,10 +369,10 @@ if "ai_enhanced_tactics" in strategy:
     pdf.set_font("Arial", "", 11)
     pdf.multi_cell(0, 6, strategy.get("ai_enhanced_tactics", ""))
 
-pdf.ln(5)
-pdf.set_font("Arial", "B", 12)
-pdf.cell(0, 8, "Open Optimization Tasks:", ln=True)
-pdf.set_font("Arial", "", 12)
+    pdf.ln(5)
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 8, "Open Optimization Tasks:", ln=True)
+    pdf.set_font("Arial", "", 12)
 if tasks:
     for t in tasks:
         status = "Done" if t.get("completed") else "Pending"
@@ -381,7 +381,7 @@ else:
     pdf.cell(0, 7, "No tasks recorded.", ln=True)
 
 # Output to BytesIO for Streamlit download
-pdf_bytes = io.BytesIO()
-pdf.output(pdf_bytes)
-pdf_bytes.seek(0)
+    pdf_bytes = io.BytesIO()
+    pdf.output(pdf_bytes)
+    pdf_bytes.seek(0)
 return pdf_bytes
